@@ -11,8 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "npx prettier . --check",
-    "format:fix": "npx prettier . --write",
+    "format": "prettier . --check",
+    "format:fix": "prettier . --write",
     "prepare": "husky install"
   },
   "repository": {
