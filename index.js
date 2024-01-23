@@ -1,5 +1,5 @@
-const net = require("net");
-const process = require("process");
+import net from "net";
+import process from "process";
 
 const server = net.createServer();
 
