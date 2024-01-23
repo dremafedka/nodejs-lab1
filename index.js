@@ -1,4 +1,6 @@
-import net from "net";
+const net = require("net");
+const process = require("process");
+
 const server = net.createServer();
 
 server.on("connection", (clientToProxySocket) => {
@@ -19,7 +21,7 @@ server.on("connection", (clientToProxySocket) => {
       serverAddress = data.toString().split("Host: ")[1].split("\r\n")[0];
     }
 
-    console.log(serverAddress);
+    console.log(serverAddress, data.toString());
 
     let proxyToServerSocket = net.createConnection(
       { host: serverAddress, port: serverPort },
@@ -56,6 +58,14 @@ server.on("error", (err) => {
 
 server.on("close", () => {
   console.log("Client disconnected");
+});
+
+process.on("SIGTERM", () => {
+  console.log("Received SIGTERM signal. Closing server...");
+  server.close(() => {
+    console.log("Server closed. Exiting process.");
+    process.exit(0);
+  });
 });
 
 server.listen({ host: "0.0.0.0", port: 8080 }, () => {
